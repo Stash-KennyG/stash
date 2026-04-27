@@ -47,6 +47,7 @@ export interface IUIConfig {
   showChildTagContent?: boolean;
   showChildStudioContent?: boolean;
   showLinksOnPerformerCard?: boolean;
+  showDeceasedAgeInfo?: boolean;
   showTagCardOnHover?: boolean;
 
   showStudioText?: boolean;

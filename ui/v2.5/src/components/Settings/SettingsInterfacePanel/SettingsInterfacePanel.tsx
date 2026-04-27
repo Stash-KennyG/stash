@@ -525,6 +525,13 @@ export const SettingsInterfacePanel: React.FC = PatchComponent(
             checked={ui.showLinksOnPerformerCard ?? undefined}
             onChange={(v) => saveUI({ showLinksOnPerformerCard: v })}
           />
+          <BooleanSetting
+            id="show-deceased-age-info"
+            headingID="config.ui.performer_list.options.show_deceased_age_info.heading"
+            subHeadingID="config.ui.performer_list.options.show_deceased_age_info.description"
+            checked={ui.showDeceasedAgeInfo ?? true}
+            onChange={(v) => saveUI({ showDeceasedAgeInfo: v })}
+          />
         </SettingSection>
 
         <SettingSection headingID="config.ui.image_wall.heading">

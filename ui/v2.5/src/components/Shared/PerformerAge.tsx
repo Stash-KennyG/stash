@@ -3,6 +3,7 @@ import { IntlShape, useIntl } from "react-intl";
 import { faGhost } from "@fortawesome/free-solid-svg-icons";
 import TextUtils from "src/utils/text";
 import { Icon } from "./Icon";
+import { useConfigurationContext } from "src/hooks/Config";
 
 interface IAgeInfoInput {
   birthdate?: string | null;
@@ -27,8 +28,39 @@ const isDeathBeforeScene = (deathDate: string, sceneDate: string) => {
 
 const formatAgeInfo = (
   { birthdate, deathDate, sceneDate }: IAgeInfoInput,
-  intl: IntlShape
+  intl: IntlShape,
+  showDeceasedAgeInfo: boolean
 ): IAgeInfoResult => {
+  const yearsOld = intl.formatMessage({ id: "years_old" });
+  const aliveMessageId = sceneDate
+    ? "media_info.performer_card.age_context"
+    : "media_info.performer_card.age";
+
+  // Standard age flow: use normal age message IDs and cap age at death.
+  if (!showDeceasedAgeInfo) {
+    if (!birthdate) {
+      return { isDeceased: false };
+    }
+
+    const capAtDeath =
+      deathDate !== undefined &&
+      deathDate !== null &&
+      (!sceneDate || !isDeathBeforeScene(deathDate, sceneDate));
+
+    const age = TextUtils.age(
+      birthdate,
+      capAtDeath ? deathDate : sceneDate ?? undefined
+    );
+
+    return {
+      isDeceased: false,
+      message: intl.formatMessage(
+        { id: aliveMessageId },
+        { age: Math.max(0, age), years_old: yearsOld }
+      ),
+    };
+  }
+
   if (!birthdate && !deathDate) {
     return { isDeceased: false };
   }
@@ -39,10 +71,6 @@ const formatAgeInfo = (
     }
 
     const age = TextUtils.age(birthdate, sceneDate);
-    const yearsOld = intl.formatMessage({ id: "years_old" });
-    const aliveMessageId = sceneDate
-      ? "media_info.performer_card.age_context"
-      : "media_info.performer_card.age";
     return {
       isDeceased: false,
       message: intl.formatMessage(
@@ -115,7 +143,10 @@ const formatAgeInfo = (
 
 export const useAgeInfoFormatter = () => {
   const intl = useIntl();
-  return (input: IAgeInfoInput): IAgeInfoResult => formatAgeInfo(input, intl);
+  const { configuration } = useConfigurationContext();
+  const showDeceasedAgeInfo = configuration.ui.showDeceasedAgeInfo ?? true;
+  return (input: IAgeInfoInput): IAgeInfoResult =>
+    formatAgeInfo(input, intl, showDeceasedAgeInfo);
 };
 
 export const useAgeInfo = (input: IAgeInfoInput): IAgeInfoResult => {

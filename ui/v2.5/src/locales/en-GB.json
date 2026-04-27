@@ -894,6 +894,10 @@
       "performer_list": {
         "heading": "Performer List",
         "options": {
+          "show_deceased_age_info": {
+            "description": "Adds an icon to the age line for deceased performers.",
+            "heading": "Show deceased performer icon"
+          },
           "show_links_on_grid_card": {
             "heading": "Display links on performer grid cards"
           }
