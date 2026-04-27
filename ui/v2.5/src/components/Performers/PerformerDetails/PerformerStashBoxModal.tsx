@@ -10,9 +10,9 @@ import { useDebounce } from "src/hooks/debounce";
 
 import { TruncatedText } from "src/components/Shared/TruncatedText";
 import { stringToGender } from "src/utils/gender";
-import TextUtils from "src/utils/text";
 import GenderIcon from "src/components/Performers/GenderIcon";
 import { CountryFlag } from "src/components/Shared/CountryFlag";
+import { AgeInfoDisplay } from "src/components/Shared/PerformerAge";
 
 const CLASSNAME = "PerformerScrapeModal";
 const CLASSNAME_LIST = `${CLASSNAME}-list`;
@@ -25,6 +25,7 @@ interface IPerformerSearchResultDetailsProps {
 const PerformerSearchResultDetails: React.FC<
   IPerformerSearchResultDetailsProps
 > = ({ performer }) => {
+  const intl = useIntl();
   function renderImage() {
     if (performer.images && performer.images.length > 0) {
       return (
@@ -36,14 +37,6 @@ const PerformerSearchResultDetails: React.FC<
           />
         </div>
       );
-    }
-  }
-
-  function calculateAge() {
-    if (performer?.birthdate) {
-      // calculate the age from birthdate. In future, this should probably be
-      // provided by the server
-      return TextUtils.age(performer.birthdate, performer.death_date);
     }
   }
 
@@ -80,8 +73,6 @@ const PerformerSearchResultDetails: React.FC<
     }
   }
 
-  let age = calculateAge();
-
   return (
     <div className="performer-result">
       <Row>
@@ -104,12 +95,10 @@ const PerformerSearchResultDetails: React.FC<
                 />
               </span>
             )}
-            {age && (
-              <span>
-                {`${age} `}
-                <FormattedMessage id="years_old" />
-              </span>
-            )}
+            <AgeInfoDisplay
+              birthdate={performer.birthdate}
+              deathDate={performer.death_date}
+            />
           </h5>
           {renderCountry()}
         </div>

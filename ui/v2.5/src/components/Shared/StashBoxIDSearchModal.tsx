@@ -7,7 +7,6 @@ import { ModalComponent } from "src/components/Shared/Modal";
 import { LoadingIndicator } from "src/components/Shared/LoadingIndicator";
 import { stashboxDisplayName } from "src/utils/stashbox";
 import { TruncatedText } from "src/components/Shared/TruncatedText";
-import TextUtils from "src/utils/text";
 import GenderIcon from "src/components/Performers/GenderIcon";
 import { CountryFlag } from "src/components/Shared/CountryFlag";
 import { Icon } from "src/components/Shared/Icon";
@@ -19,6 +18,7 @@ import {
 } from "src/core/StashService";
 import { useToast } from "src/hooks/Toast";
 import { stringToGender } from "src/utils/gender";
+import { AgeInfoDisplay } from "src/components/Shared/PerformerAge";
 
 type SearchResultItem =
   | GQL.ScrapedPerformerDataFragment
@@ -84,9 +84,7 @@ interface IPerformerResultProps {
 const PerformerSearchResultDetails: React.FC<IPerformerResultProps> = ({
   performer,
 }) => {
-  const age = performer?.birthdate
-    ? TextUtils.age(performer.birthdate, performer.death_date)
-    : undefined;
+  const intl = useIntl();
 
   return (
     <div className="performer-result">
@@ -110,12 +108,10 @@ const PerformerSearchResultDetails: React.FC<IPerformerResultProps> = ({
                 />
               </span>
             )}
-            {age && (
-              <span>
-                {`${age} `}
-                <FormattedMessage id="years_old" />
-              </span>
-            )}
+            <AgeInfoDisplay
+              birthdate={performer.birthdate}
+              deathDate={performer.death_date}
+            />
           </h5>
           {performer.country && (
             <span>

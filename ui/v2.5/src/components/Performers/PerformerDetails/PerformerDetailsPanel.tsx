@@ -16,6 +16,7 @@ import {
 } from "../PerformerList";
 import { PatchComponent } from "src/patch";
 import { CustomFields } from "src/components/Shared/CustomFields";
+import { AgeInfoDisplay, useAgeInfo } from "src/components/Shared/PerformerAge";
 
 interface IPerformerDetails {
   performer: GQL.PerformerDataFragment;
@@ -67,6 +68,10 @@ export const PerformerDetailsPanel: React.FC<IPerformerDetails> =
     let details = performer?.details
       ?.replace(/\[((?:http|www\.)[^\n\]]+)\]/gm, "")
       .trim();
+    const ageInfo = useAgeInfo({
+      birthdate: performer.birthdate,
+      deathDate: performer.death_date,
+    });
 
     return (
       <PerformerDetailGroup {...props}>
@@ -84,9 +89,13 @@ export const PerformerDetailsPanel: React.FC<IPerformerDetails> =
         <DetailItem
           id="age"
           value={
-            !fullWidth
-              ? TextUtils.age(performer.birthdate, performer.death_date)
-              : FormatAge(performer.birthdate, performer.death_date)
+            ageInfo.isDeceased && ageInfo.message ? (
+              <AgeInfoDisplay ageInfo={ageInfo} />
+            ) : !fullWidth ? (
+              TextUtils.age(performer.birthdate, performer.death_date)
+            ) : (
+              FormatAge(performer.birthdate, performer.death_date)
+            )
           }
           title={
             !fullWidth
@@ -199,6 +208,10 @@ export const CompressedPerformerDetailsPanel: React.FC<IPerformerDetails> =
   PatchComponent("CompressedPerformerDetailsPanel", ({ performer }) => {
     // Network state
     const intl = useIntl();
+    const ageInfo = useAgeInfo({
+      birthdate: performer.birthdate,
+      deathDate: performer.death_date,
+    });
 
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -220,7 +233,7 @@ export const CompressedPerformerDetailsPanel: React.FC<IPerformerDetails> =
           ) : (
             ""
           )}
-          {performer.birthdate ? (
+          {ageInfo.message ? (
             <>
               <span className="detail-divider">/</span>
               <span
@@ -230,7 +243,7 @@ export const CompressedPerformerDetailsPanel: React.FC<IPerformerDetails> =
                   performer.birthdate ?? undefined
                 )}
               >
-                {TextUtils.age(performer.birthdate, performer.death_date)}
+                <AgeInfoDisplay ageInfo={ageInfo} />
               </span>
             </>
           ) : (

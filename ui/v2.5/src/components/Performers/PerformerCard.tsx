@@ -1,9 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useIntl } from "react-intl";
 import * as GQL from "src/core/generated-graphql";
 import NavUtils from "src/utils/navigation";
-import TextUtils from "src/utils/text";
 import { GridCard } from "../Shared/GridCard/GridCard";
 import { CountryFlag } from "../Shared/CountryFlag";
 import { HoverPopover } from "../Shared/HoverPopover";
@@ -26,6 +24,7 @@ import { PatchComponent } from "src/patch";
 import { ExternalLinksButton } from "../Shared/ExternalLinksButton";
 import { useConfigurationContext } from "src/hooks/Config";
 import { OCounterButton } from "../Shared/CountButton";
+import { AgeInfoDisplay } from "src/components/Shared/PerformerAge";
 
 export interface IPerformerCardExtraCriteria {
   scenes?: ModifierCriterion<CriterionValue>[];
@@ -287,30 +286,15 @@ const PerformerCardOverlays: React.FC<IPerformerCardProps> = PatchComponent(
 const PerformerCardDetails: React.FC<IPerformerCardProps> = PatchComponent(
   "PerformerCard.Details",
   ({ performer, ageFromDate }) => {
-    const intl = useIntl();
-    const age = TextUtils.age(
-      performer.birthdate,
-      ageFromDate ?? performer.death_date
-    );
-    const ageL10nId = ageFromDate
-      ? "media_info.performer_card.age_context"
-      : "media_info.performer_card.age";
-    const ageL10String = intl.formatMessage({
-      id: "years_old",
-      defaultMessage: "years old",
-    });
-    const ageString = intl.formatMessage(
-      { id: ageL10nId },
-      { age, years_old: ageL10String }
-    );
-
     return (
       <>
-        {age !== 0 ? (
-          <div className="performer-card__age">{ageString}</div>
-        ) : (
-          ""
-        )}
+        <AgeInfoDisplay
+          as="div"
+          className="performer-card__age"
+          birthdate={performer.birthdate}
+          deathDate={performer.death_date}
+          sceneDate={ageFromDate}
+        />
       </>
     );
   }

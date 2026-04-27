@@ -22,6 +22,7 @@ import {
 import TextUtils from "src/utils/text";
 import { getCountryByISO } from "src/utils/country";
 import { IColumn, ListTable } from "../List/ListTable";
+import { AgeInfoDisplay, useAgeInfoFormatter } from "src/components/Shared/PerformerAge";
 
 interface IPerformerListTableProps {
   performers: GQL.PerformerDataFragment[];
@@ -35,6 +36,7 @@ export const PerformerListTable: React.FC<IPerformerListTableProps> = (
   props: IPerformerListTableProps
 ) => {
   const intl = useIntl();
+  const getAgeInfo = useAgeInfoFormatter();
 
   const [updatePerformer] = usePerformerUpdate();
 
@@ -113,19 +115,24 @@ export const PerformerListTable: React.FC<IPerformerListTableProps> = (
     />
   );
 
-  const AgeCell = (performer: GQL.PerformerDataFragment) => (
-    <span
-      title={
-        performer.birthdate
-          ? TextUtils.formatFuzzyDate(intl, performer.birthdate ?? undefined)
-          : ""
-      }
-    >
-      {performer.birthdate
-        ? TextUtils.age(performer.birthdate, performer.death_date)
-        : ""}
-    </span>
-  );
+  const AgeCell = (performer: GQL.PerformerDataFragment) => {
+    const ageInfo = getAgeInfo({
+      birthdate: performer.birthdate,
+      deathDate: performer.death_date,
+    });
+
+    return (
+      <span
+        title={
+          performer.birthdate
+            ? TextUtils.formatFuzzyDate(intl, performer.birthdate ?? undefined)
+            : ""
+        }
+      >
+        <AgeInfoDisplay ageInfo={ageInfo} />
+      </span>
+    );
+  };
 
   const DeathdateCell = (performer: GQL.PerformerDataFragment) => (
     <>{performer.death_date}</>

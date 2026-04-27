@@ -35,6 +35,7 @@ import { PerformerPopover } from "./PerformerPopover";
 import { Placement } from "react-bootstrap/esm/Overlay";
 import { isUUID } from "src/utils/stashIds";
 import { filterByStashID } from "src/models/list-filter/utils";
+import { AgeInfoDisplay, useAgeInfo } from "src/components/Shared/PerformerAge";
 
 export type SelectObject = {
   id: string;
@@ -151,6 +152,11 @@ const _PerformerSelect: React.FC<
     }
 
     const sceneAge = TextUtils.age(object.birthdate, props.ageFromDate);
+    const ageInfo = useAgeInfo({
+      birthdate: object.birthdate,
+      deathDate: object.death_date,
+      sceneDate: props.ageFromDate,
+    });
 
     const age =
       sceneAge < 18
@@ -209,10 +215,18 @@ const _PerformerSelect: React.FC<
                 </span>
               )}
 
-              {object.birthdate && (
+              {(object.birthdate || (ageInfo.isDeceased && ageInfo.message)) && (
                 <span className="performer-select-birthdate">
                   {object.birthdate}
-                  <span className="performer-select-age">{` (${ageString})`}</span>
+                  {ageInfo.isDeceased && ageInfo.message ? (
+                    <span className="performer-select-age">
+                      {" ("}
+                      <AgeInfoDisplay ageInfo={ageInfo} />
+                      {")"}
+                    </span>
+                  ) : (
+                    <span className="performer-select-age">{` (${ageString})`}</span>
+                  )}
                 </span>
               )}
             </span>

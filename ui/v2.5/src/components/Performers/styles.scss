@@ -143,7 +143,11 @@
   }
 
   &__age {
+    align-items: flex-start;
     color: $muted-gray;
+    display: inline-flex;
+    gap: 0.15rem;
+    line-height: 1.2;
   }
 
   // allow country string to be shown, but disable by default
@@ -292,6 +296,11 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+
+      .performer-select-age {
+        align-items: center;
+        display: inline-flex;
       }
     }
   }

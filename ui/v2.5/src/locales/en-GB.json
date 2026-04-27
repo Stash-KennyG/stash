@@ -1289,7 +1289,9 @@
     "oshash_meaning": "OpenSubtitles Hash",
     "performer_card": {
       "age": "{age} {years_old}",
-      "age_context": "{age} {years_old} at production"
+      "age_context": "{age} {years_old} at production",
+      "deceased_years_ago": "{years} years ago",
+      "deceased_years_ago_at_age": "{years} years ago at age {age}"
     },
     "phash": "PHash",
     "phash_meaning": "Perceptual Hash",
