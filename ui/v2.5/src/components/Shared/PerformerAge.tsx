@@ -1,6 +1,6 @@
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
-import { faGhost } from "@fortawesome/free-solid-svg-icons";
+import { faRibbon } from "@fortawesome/free-solid-svg-icons";
 import TextUtils from "src/utils/text";
 import { Icon } from "./Icon";
 import { useConfigurationContext } from "src/hooks/Config";
@@ -183,7 +183,7 @@ export const AgeInfoDisplay: React.FC<IAgeInfoDisplayProps> = ({
   return (
     <Component className={resolvedClassName}>
       {resolvedAgeInfo.isDeceased && (
-        <Icon icon={faGhost} className="mx-0 mr-1" />
+        <Icon icon={faRibbon} className="performer-age-deceased-icon mx-0 mr-1" />
       )}
       <span>{resolvedAgeInfo.message}</span>
     </Component>
