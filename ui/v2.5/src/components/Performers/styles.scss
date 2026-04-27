@@ -249,6 +249,10 @@
     content: " • ";
   }
 
+  &:has(+ span > .svg-inline--fa)::after {
+    content: "";
+  }
+
   &:last-child::after {
     content: "";
   }
