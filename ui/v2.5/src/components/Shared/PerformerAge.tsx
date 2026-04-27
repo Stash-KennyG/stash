@@ -94,12 +94,12 @@ const formatAgeInfo = (
       }
 
       const ageAtProduction = TextUtils.age(birthdate, sceneDate);
-      const yearsOld = intl.formatMessage({ id: "years_old" });
+      const yearsOldLabel = intl.formatMessage({ id: "years_old" });
       return {
         isDeceased: true,
         message: intl.formatMessage(
           { id: "media_info.performer_card.age_context" },
-          { age: Math.max(0, ageAtProduction), years_old: yearsOld }
+          { age: Math.max(0, ageAtProduction), years_old: yearsOldLabel }
         ),
       };
     }

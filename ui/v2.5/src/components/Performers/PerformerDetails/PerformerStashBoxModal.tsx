@@ -25,7 +25,6 @@ interface IPerformerSearchResultDetailsProps {
 const PerformerSearchResultDetails: React.FC<
   IPerformerSearchResultDetailsProps
 > = ({ performer }) => {
-  const intl = useIntl();
   function renderImage() {
     if (performer.images && performer.images.length > 0) {
       return (

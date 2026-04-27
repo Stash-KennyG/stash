@@ -22,7 +22,10 @@ import {
 import TextUtils from "src/utils/text";
 import { getCountryByISO } from "src/utils/country";
 import { IColumn, ListTable } from "../List/ListTable";
-import { AgeInfoDisplay, useAgeInfoFormatter } from "src/components/Shared/PerformerAge";
+import {
+  AgeInfoDisplay,
+  useAgeInfoFormatter,
+} from "src/components/Shared/PerformerAge";
 
 interface IPerformerListTableProps {
   performers: GQL.PerformerDataFragment[];

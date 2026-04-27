@@ -84,8 +84,6 @@ interface IPerformerResultProps {
 const PerformerSearchResultDetails: React.FC<IPerformerResultProps> = ({
   performer,
 }) => {
-  const intl = useIntl();
-
   return (
     <div className="performer-result">
       <Row>

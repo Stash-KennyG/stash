@@ -215,7 +215,8 @@ const _PerformerSelect: React.FC<
                 </span>
               )}
 
-              {(object.birthdate || (ageInfo.isDeceased && ageInfo.message)) && (
+              {(object.birthdate ||
+                (ageInfo.isDeceased && ageInfo.message)) && (
                 <span className="performer-select-birthdate">
                   {object.birthdate}
                   {ageInfo.isDeceased && ageInfo.message ? (
