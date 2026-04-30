@@ -12,7 +12,10 @@ import { TruncatedText } from "src/components/Shared/TruncatedText";
 import { stringToGender } from "src/utils/gender";
 import GenderIcon from "src/components/Performers/GenderIcon";
 import { CountryFlag } from "src/components/Shared/CountryFlag";
-import { AgeInfoDisplay } from "src/components/Shared/PerformerAge";
+import {
+  AgeInfoDisplay,
+  DeceasedNameSup,
+} from "src/components/Shared/PerformerAge";
 
 const CLASSNAME = "PerformerScrapeModal";
 const CLASSNAME_LIST = `${CLASSNAME}-list`;
@@ -78,7 +81,10 @@ const PerformerSearchResultDetails: React.FC<
         {renderImage()}
         <div className="col flex-column">
           <h4 className="performer-name">
-            <span>{performer.name}</span>
+            <span>
+              {performer.name}
+              <DeceasedNameSup deathDate={performer.death_date} />
+            </span>
             {performer.disambiguation && (
               <span className="performer-disambiguation">
                 {` (${performer.disambiguation})`}

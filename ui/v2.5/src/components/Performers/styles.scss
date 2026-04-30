@@ -244,13 +244,6 @@
   border-bottom: 1px dotted #f5f8fa;
 }
 
-.performer-age-deceased-icon {
-  color: #000;
-  filter: drop-shadow(0px 2px 1px #aaa) drop-shadow(2px 0px 1px #aaa)
-    drop-shadow(0px -2px 1px #aaa) drop-shadow(-2px 0px 1px #aaa);
-  font-size: 0.85em;
-}
-
 .performer-result .performer-details > span {
   &::after {
     content: " • ";
@@ -263,6 +256,22 @@
   &:last-child::after {
     content: "";
   }
+}
+
+.performer-name-deceased-sup {
+  font-size: 0.7em;
+  margin-left: 0.1rem;
+  vertical-align: super;
+}
+
+.performer-card .performer-name-deceased-sup {
+  font-size: 0.72em;
+  font-weight: 600;
+  margin-left: 0.06rem;
+  vertical-align: baseline;
+  position: relative;
+  top: -0.38em;
+  line-height: 1;
 }
 
 .performer-select-value .performer-disambiguation {

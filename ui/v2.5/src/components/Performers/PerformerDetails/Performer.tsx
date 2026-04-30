@@ -50,6 +50,7 @@ import { PatchComponent } from "src/patch";
 import { ILightboxImage } from "src/hooks/Lightbox/types";
 import { goBackOrReplace } from "src/utils/history";
 import { OCounterButton } from "src/components/Shared/CountButton";
+import { DeceasedNameSup } from "src/components/Shared/PerformerAge";
 
 interface IProps {
   performer: GQL.PerformerDataFragment;
@@ -438,6 +439,7 @@ const PerformerPage: React.FC<IProps> = PatchComponent(
                   disambiguation={performer.disambiguation ?? undefined}
                   classNamePrefix="performer"
                 >
+                  <DeceasedNameSup deathDate={performer.death_date} />
                   {!isEditing && (
                     <ExpandCollapseButton
                       collapsed={collapsed}

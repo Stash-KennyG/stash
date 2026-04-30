@@ -24,7 +24,10 @@ import { PatchComponent } from "src/patch";
 import { ExternalLinksButton } from "../Shared/ExternalLinksButton";
 import { useConfigurationContext } from "src/hooks/Config";
 import { OCounterButton } from "../Shared/CountButton";
-import { AgeInfoDisplay } from "src/components/Shared/PerformerAge";
+import {
+  AgeInfoDisplay,
+  DeceasedNameSup,
+} from "src/components/Shared/PerformerAge";
 
 export interface IPerformerCardExtraCriteria {
   scenes?: ModifierCriterion<CriterionValue>[];
@@ -321,7 +324,10 @@ const PerformerCardTitle: React.FC<IPerformerCardProps> = PatchComponent(
   ({ performer }) => {
     return (
       <div>
-        <span className="performer-name">{performer.name}</span>
+        <span className="performer-name">
+          {performer.name}
+          <DeceasedNameSup deathDate={performer.death_date} />
+        </span>
         {performer.disambiguation && (
           <span className="performer-disambiguation">
             {` (${performer.disambiguation})`}

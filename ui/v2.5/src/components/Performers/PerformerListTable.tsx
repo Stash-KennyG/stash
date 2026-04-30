@@ -24,6 +24,7 @@ import { getCountryByISO } from "src/utils/country";
 import { IColumn, ListTable } from "../List/ListTable";
 import {
   AgeInfoDisplay,
+  DeceasedNameSup,
   useAgeInfoFormatter,
 } from "src/components/Shared/PerformerAge";
 
@@ -84,6 +85,7 @@ export const PerformerListTable: React.FC<IPerformerListTableProps> = (
     <Link to={`/performers/${performer.id}`}>
       <div className="ellips-data" title={performer.name}>
         {performer.name}
+        <DeceasedNameSup deathDate={performer.death_date} />
         {performer.disambiguation && (
           <span className="performer-disambiguation">
             {` (${performer.disambiguation})`}

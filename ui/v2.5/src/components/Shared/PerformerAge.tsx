@@ -1,8 +1,6 @@
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
-import { faRibbon } from "@fortawesome/free-solid-svg-icons";
 import TextUtils from "src/utils/text";
-import { Icon } from "./Icon";
 import { useConfigurationContext } from "src/hooks/Config";
 
 interface IAgeInfoInput {
@@ -15,6 +13,23 @@ export interface IAgeInfoResult {
   message?: string;
   isDeceased: boolean;
 }
+
+interface IDeceasedNameSupProps {
+  deathDate?: string | null;
+}
+
+export const DeceasedNameSup: React.FC<IDeceasedNameSupProps> = ({
+  deathDate,
+}) => {
+  const { configuration } = useConfigurationContext();
+  const showDeceasedAgeInfo = configuration.ui.showDeceasedAgeInfo ?? true;
+
+  if (!showDeceasedAgeInfo || !deathDate) {
+    return null;
+  }
+
+  return <sup className="performer-name-deceased-sup">{"\u2020"}</sup>;
+};
 
 const isDeathBeforeScene = (deathDate: string, sceneDate: string) => {
   const death = TextUtils.stringToFuzzyDate(deathDate);
@@ -182,9 +197,6 @@ export const AgeInfoDisplay: React.FC<IAgeInfoDisplayProps> = ({
 
   return (
     <Component className={resolvedClassName}>
-      {resolvedAgeInfo.isDeceased && (
-        <Icon icon={faRibbon} className="performer-age-deceased-icon mx-0 mr-1" />
-      )}
       <span>{resolvedAgeInfo.message}</span>
     </Component>
   );

@@ -984,6 +984,7 @@
   "date_format": "YYYY-MM-DD",
   "datetime_format": "YYYY-MM-DD HH:MM",
   "death_date": "Death Date",
+  "died": "Died",
   "death_year": "Death Year",
   "descending": "Descending",
   "description": "Description",

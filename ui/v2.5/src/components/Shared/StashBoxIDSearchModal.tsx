@@ -18,7 +18,10 @@ import {
 } from "src/core/StashService";
 import { useToast } from "src/hooks/Toast";
 import { stringToGender } from "src/utils/gender";
-import { AgeInfoDisplay } from "src/components/Shared/PerformerAge";
+import {
+  AgeInfoDisplay,
+  DeceasedNameSup,
+} from "src/components/Shared/PerformerAge";
 
 type SearchResultItem =
   | GQL.ScrapedPerformerDataFragment
@@ -90,7 +93,10 @@ const PerformerSearchResultDetails: React.FC<IPerformerResultProps> = ({
         <SearchResultImage imageUrl={performer.images?.[0]} />
         <div className="col flex-column">
           <h4 className="performer-name">
-            <span>{performer.name}</span>
+            <span>
+              {performer.name}
+              <DeceasedNameSup deathDate={performer.death_date} />
+            </span>
             {performer.disambiguation && (
               <span className="performer-disambiguation">
                 {` (${performer.disambiguation})`}

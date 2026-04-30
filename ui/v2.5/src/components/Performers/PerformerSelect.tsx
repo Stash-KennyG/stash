@@ -35,7 +35,11 @@ import { PerformerPopover } from "./PerformerPopover";
 import { Placement } from "react-bootstrap/esm/Overlay";
 import { isUUID } from "src/utils/stashIds";
 import { filterByStashID } from "src/models/list-filter/utils";
-import { AgeInfoDisplay, useAgeInfo } from "src/components/Shared/PerformerAge";
+import {
+  AgeInfoDisplay,
+  DeceasedNameSup,
+  useAgeInfo,
+} from "src/components/Shared/PerformerAge";
 
 export type SelectObject = {
   id: string;
@@ -199,6 +203,7 @@ const _PerformerSelect: React.FC<
                 text={
                   <span>
                     {name}
+                    <DeceasedNameSup deathDate={object.death_date} />
                     {alias && (
                       <span className="performer-select-alias">
                         &nbsp;({alias})
@@ -254,7 +259,10 @@ const _PerformerSelect: React.FC<
           placement={props.hoverPlacementLabel ?? "top"}
         >
           <span className="performer-select-value">
-            <span>{object.name}</span>
+            <span>
+              {object.name}
+              <DeceasedNameSup deathDate={object.death_date} />
+            </span>
             {object.disambiguation && (
               <span className="performer-disambiguation">{` (${object.disambiguation})`}</span>
             )}

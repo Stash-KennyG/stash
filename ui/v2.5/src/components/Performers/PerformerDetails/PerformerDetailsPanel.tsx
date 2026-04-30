@@ -16,7 +16,11 @@ import {
 } from "../PerformerList";
 import { PatchComponent } from "src/patch";
 import { CustomFields } from "src/components/Shared/CustomFields";
-import { AgeInfoDisplay, useAgeInfo } from "src/components/Shared/PerformerAge";
+import {
+  AgeInfoDisplay,
+  DeceasedNameSup,
+  useAgeInfo,
+} from "src/components/Shared/PerformerAge";
 
 interface IPerformerDetails {
   performer: GQL.PerformerDataFragment;
@@ -222,6 +226,7 @@ export const CompressedPerformerDetailsPanel: React.FC<IPerformerDetails> =
         <div className="sticky detail-header-group">
           <a className="performer-name" onClick={() => scrollToTop()}>
             {performer.name}
+            <DeceasedNameSup deathDate={performer.death_date} />
           </a>
           {performer.gender ? (
             <>
